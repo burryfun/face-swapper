@@ -9,6 +9,19 @@ class Detectors(Enum):
     MEDIAPIPE = MediapipeDetector
     FACENET = FaceNetDetector
 
+    def __str__(self):
+        return self.name.lower()
+
+    def __repr__(self):
+        return str(self)
+        
+    @staticmethod
+    def argparse(s):
+        try:
+            return Detectors[s.upper()]
+        except KeyError:
+            return s
+
 def get_detection_result(detector_name: Detectors, video_path: str, debug: bool = False) -> str:
     output = {'data': []}
 
