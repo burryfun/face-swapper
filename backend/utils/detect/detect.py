@@ -1,16 +1,35 @@
+from enum import Enum
 import cv2
 import json
 from utils.detect.mediapipe_detector import MediapipeDetector
 from utils.detect.facenet_detector import FaceNetDetector
 
 FONT = cv2.FONT_HERSHEY_SIMPLEX
-DETECTORS = {'mediapipe': MediapipeDetector,
-             'facenet': FaceNetDetector}
+class Detectors(Enum):
+    MEDIAPIPE = MediapipeDetector
+    FACENET = FaceNetDetector
 
-def get_detection_result(detector_name, video_path, debug=False):
+    def __str__(self):
+        return self.name.lower()
+
+    def __repr__(self):
+        return str(self)
+        
+    @staticmethod
+    def argparse(s):
+        try:
+            return Detectors[s.upper()]
+        except KeyError:
+            return s
+
+def get_detection_result(detector_name: Detectors, video_path: str, debug: bool = False) -> str:
     output = {'data': []}
 
-    detector = DETECTORS[detector_name]()
+    # Type checking
+    if not isinstance(detector_name, Detectors):
+        raise TypeError('detector must be an instance of Detectors Enum')
+
+    detector = detector_name.value()
 
     cap = cv2.VideoCapture(video_path)
     while cap.isOpened():
