@@ -12,6 +12,14 @@
   <div id="app">
     <div class="input-container">
       <div class="content-container"></div>
+      <div class="parameters-container">
+        <label>Detector type: </label>
+        <select id="detector-type">
+          <option value="mediapipe">MediaPipe</option>
+          <option value="facenet">Facenet</option>
+        </select>
+      </div>
+      
       <label class="btn-upload" for="file-input">
         <input class="hidden" type="file" id="file-input" multiple>
         <p>Upload Video</p>
