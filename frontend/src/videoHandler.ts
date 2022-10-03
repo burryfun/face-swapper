@@ -93,7 +93,7 @@ export class VideoHandler {
     this.video.appendChild(videoSource);
   }
 
-  loadData(data: FaceData[]) {
+  loadDetectrionData(data: FaceData[]) {
     this.faceData = data;
   }
 
