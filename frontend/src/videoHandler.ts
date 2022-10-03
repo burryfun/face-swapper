@@ -119,21 +119,18 @@ export class VideoHandler {
 
   private playHandler() {
     const ctx = this.canvas.getContext('2d');
-    const $this = this;
-
-    // console.log(this.faceData);
 
     let currentFrame = 0; 
-    function loop() {
-      if (!$this.video.paused && !$this.video.ended) {
-        $this._videoCurrentTime = $this.video.currentTime;
-        currentFrame = $this._videoCurrentTime * $this.FRAMERATE;
+    const loop = () => {
+      if (!this.video.paused && !this.video.ended) {
+        this._videoCurrentTime = this.video.currentTime;
+        currentFrame = this._videoCurrentTime * this.FRAMERATE;
 
-        ctx!.drawImage($this.video, 0, 0, $this.WIDTH, $this.HEIGHT);
+        ctx!.drawImage(this.video, 0, 0, this.WIDTH, this.HEIGHT);
 
-        $this.drawDetection(ctx!, Math.round(currentFrame));
+        this.drawDetection(ctx!, Math.round(currentFrame));
 
-        setTimeout(loop, 1000 / 25); // drawing at 25fps
+        setTimeout(loop, 1000 / this.FRAMERATE); // drawing at 25fps
       }
     };
 
