@@ -1,6 +1,6 @@
 export class VideoHandler {
 
-  private readonly FRAMERATE: number = 25;
+  private readonly FRAMERATE: number = 30;
   private readonly WIDTH: number = 600;
   private readonly HEIGHT: number = 400;
   private X_SCALE: number = 1;
@@ -16,7 +16,7 @@ export class VideoHandler {
   public originalVideoHeight: number = 0;
 
   private canvas: HTMLCanvasElement;
-  private faceData: FaceData[] = [];
+  private faceData: FaceData[][] = [];
 
   constructor(parent: Element | null) {
     this._contentContainer = document.createElement('div');
@@ -93,27 +93,33 @@ export class VideoHandler {
     this.video.appendChild(videoSource);
   }
 
-  loadDetectrionData(data: FaceData[]) {
+  loadDetectionData(data: FaceData[][]) {
     this.faceData = data;
   }
 
   drawDetection(context: CanvasRenderingContext2D, iter: number) {
-    const currentData = this.faceData[iter];
+    const currentData: FaceData[] = this.faceData[iter];
     console.log(currentData);
 
     if (currentData) {
 
-      const x1 = currentData[0];
-      const y1 = currentData[1];
-      const x2 = currentData[2];
-      const y2 = currentData[3];
-
-      const x = x1 * this.X_SCALE;
-      const y = y1 * this.Y_SCALE;
-      const w = (x2 - x1) * this.X_SCALE;
-      const h = (y2 - y1) * this.Y_SCALE;
-
-      context.strokeRect(x, y, w, h);
+      for (let face of currentData) {
+        const x1 = face[0];
+        const y1 = face[1];
+        const x2 = face[2];
+        const y2 = face[3];
+        const id = face[4];
+  
+        const x = x1 * this.X_SCALE;
+        const y = y1 * this.Y_SCALE;
+        const w = (x2 - x1) * this.X_SCALE;
+        const h = (y2 - y1) * this.Y_SCALE;
+  
+        context.strokeRect(x, y, w, h);
+        context.font = '18px bold';
+        context.fillText(`id: ${id}`, x + w - 35, y - 2);
+      }
+      
     }
   }
 
