@@ -1,0 +1,16 @@
+env/
+test_videos/
+*.WEBM
+*.MPG
+*.MP2
+*.MPEG
+*.MPV
+*.OGG
+*.MP4
+*.M4P
+*.M4V
+*.AVI
+*.WMV
+*.MOV
+*.FLV
+*.SWF
