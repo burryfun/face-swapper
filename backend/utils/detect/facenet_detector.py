@@ -6,8 +6,10 @@ from utils.detect.sort import Sort
 
 class FaceNetDetector(object):
 
-    def __init__(self):
-        device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+    def __init__(self, device=None):
+        if device is None:
+            device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
         print(f'Using device: {device}')
         self.detector = MTCNN(image_size=160, keep_all=True, margin=0, min_face_size=20,
                               thresholds=[0.6, 0.7, 0.7], factor=0.709, post_process=True,

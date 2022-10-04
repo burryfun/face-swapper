@@ -7,7 +7,7 @@ mp_face_detection = mp.solutions.face_detection
 
 class MediapipeDetector(object):
 
-    def __init__(self, model_selection=1):
+    def __init__(self, model_selection=1, device=None):
         self.detector = mp_face_detection.FaceDetection(model_selection=model_selection,
                                                         min_detection_confidence=0.5)
 

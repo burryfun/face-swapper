@@ -143,3 +143,6 @@ dmypy.json
 *.MOV
 *.FLV
 *.SWF
+
+# some folders
+test_videos/

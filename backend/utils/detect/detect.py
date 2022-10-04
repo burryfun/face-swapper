@@ -25,7 +25,7 @@ class Detectors(Enum):
         except KeyError:
             return s
 
-def get_detection_result(detector_name: Detectors, video_path: str, debug: bool = False) -> str:
+def get_detection_result(detector_name: Detectors, video_path: str, debug: bool = False, device = None) -> str:
     start_time = time()
 
     output = {'fps': 0,
@@ -36,7 +36,7 @@ def get_detection_result(detector_name: Detectors, video_path: str, debug: bool 
     if not isinstance(detector_name, Detectors):
         raise TypeError('detector must be an instance of Detectors Enum')
 
-    detector = detector_name.value()
+    detector = detector_name.value(device=device)
 
     cap = cv2.VideoCapture(video_path)
     fps = cap.get(cv2.CAP_PROP_FPS)
