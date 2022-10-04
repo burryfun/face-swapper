@@ -1,10 +1,13 @@
 from enum import Enum
 import cv2
 import json
+from time import time
 from utils.detect.mediapipe_detector import MediapipeDetector
 from utils.detect.facenet_detector import FaceNetDetector
 
+
 FONT = cv2.FONT_HERSHEY_SIMPLEX
+
 class Detectors(Enum):
     MEDIAPIPE = MediapipeDetector
     FACENET = FaceNetDetector
@@ -23,7 +26,11 @@ class Detectors(Enum):
             return s
 
 def get_detection_result(detector_name: Detectors, video_path: str, debug: bool = False) -> str:
-    output = {'data': []}
+    start_time = time()
+
+    output = {'fps': 0,
+              'total_time': 0,
+              'data': []}
 
     # Type checking
     if not isinstance(detector_name, Detectors):
@@ -32,6 +39,7 @@ def get_detection_result(detector_name: Detectors, video_path: str, debug: bool 
     detector = detector_name.value()
 
     cap = cv2.VideoCapture(video_path)
+    fps = cap.get(cv2.CAP_PROP_FPS)
     while cap.isOpened():
 
         success, image = cap.read()
@@ -56,6 +64,10 @@ def get_detection_result(detector_name: Detectors, video_path: str, debug: bool 
 
     cap.release()
 
+    total_time = int(time() - start_time) # sec
+
+    output['fps'] = fps
+    output['total_time'] = total_time
     output = json.dumps(output)
 
     return output
