@@ -31,7 +31,7 @@ fileInput?.addEventListener('change', async (event) => {
       const response = await fetch(`${API_URL}/upload`, {method:'POST', body:formData});
       if (response.ok) {
         const data = await response.json();
-        videoHandler.loadDetectionData(data['data']);
+        videoHandler.loadDetectionData(data);
       }
     } catch(e) {
       console.log(e);

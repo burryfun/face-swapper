@@ -1,8 +1,8 @@
 export class VideoHandler {
 
-  private readonly FRAMERATE: number = 30;
   private readonly WIDTH: number = 600;
   private readonly HEIGHT: number = 400;
+  private FRAMERATE: number = 30;
   private X_SCALE: number = 1;
   private Y_SCALE: number = 1;
 
@@ -93,8 +93,9 @@ export class VideoHandler {
     this.video.appendChild(videoSource);
   }
 
-  loadDetectionData(data: FaceData[][]) {
-    this.faceData = data;
+  loadDetectionData(response: uploadResponse) {
+    this.FRAMERATE = response.fps;
+    this.faceData = response.data;
   }
 
   drawDetection(context: CanvasRenderingContext2D, iter: number) {
@@ -142,6 +143,12 @@ export class VideoHandler {
 
     loop();
   }
+}
+
+type uploadResponse = {
+  'fps': number;
+  'total_time': 0;
+  'data': FaceData[][];
 }
 
 type FaceData = {
